@@ -114,7 +114,7 @@ client.on('message', async function(message) {
     }
 
 
-    if (message.startsWith(prefix + "play") || message.startsWith(prefix+"شغل")) {
+    if (mess.startsWith(prefix + "play") || mess.startsWith(prefix+"شغل")) {
         if (message.member.voiceChannel || guilds[message.guild.id].voiceChannel != null) {
         const voiceChannel = message.member.voiceChannel
         const permissions = voiceChannel.permissionsFor(message.client.user)
@@ -191,7 +191,7 @@ client.on('message', async function(message) {
             message.reply(novc);
         }
 
-    } else if (message.startsWith(prefix + "skip") || message.startsWith(prefix+"عدي")) {
+    } else if (mess.startsWith(prefix + "skip") || mess.startsWith(prefix+"عدي")) {
         if(!message.member.voiceChannel) return message.reply(novc)
         if(message.member.hasPermission('MANAGE_CHANNELS')) {
         if (guilds[message.guild.id].queueNames[0]) {
@@ -215,7 +215,7 @@ client.on('message', async function(message) {
             message.reply("<:MxNo:460268184218632222> you already voted to skip!");
         }
 
-    } else if (message.startsWith(prefix + "queue") || message.startsWith(prefix+"قائمة")) {
+    } else if (mess.startsWith(prefix + "queue") || mess.startsWith(prefix+"قائمة")) {
         if(guilds[message.guild.id].queueNames.length < 1) return message.channel.send(`**:x: Nothing playing in this server**`);
         if(!guilds[message.guild.id].queueNames[1]) return message.channel.send('', {embed: {
         description: `__Now Playing:__\n**[${guilds[message.guild.id].queueNames[0]}](https://www.youtube.com/watch?v=${guilds[message.guild.id].queue[0]})**`,
@@ -252,7 +252,7 @@ client.on('message', async function(message) {
         }
     }
 
-if(message.startsWith(prefix+"np")) {
+if(mess.startsWith(prefix+"np")) {
     const short = require('short-number');
     if(!guilds[message.guild.id].queue[0] || !guilds[message.guild.id].isPlaying) return message.channel.send(`**:x: Nothing playing in this server.**`)
     await message.channel.startTyping()
@@ -272,7 +272,7 @@ if(message.startsWith(prefix+"np")) {
     })
 }
 
-if(message.startsWith(prefix+"stop") || message.startsWith(prefix+"اطلع")) {
+if(mess.startsWith(prefix+"stop") || mess.startsWith(prefix+"اطلع")) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if(guilds[message.guild.id].isPlaying) guilds[message.guild.id].dispatcher.end();
     if (guilds[message.guild.id].voiceChannel)
@@ -283,7 +283,7 @@ if(message.startsWith(prefix+"stop") || message.startsWith(prefix+"اطلع")) {
     }
 }
 
-if(message.startsWith(prefix+"stfu") || message.content.startsWith(`<@${client.user.id}> stfu`)) {
+if(mess.startsWith(prefix+"stfu") || message.content.startsWith(`<@${client.user.id}> stfu`)) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if(guilds[message.guild.id].isPlaying) guilds[message.guild.id].dispatcher.end();
     if (guilds[message.guild.id].voiceChannel)
@@ -294,7 +294,7 @@ if(message.startsWith(prefix+"stfu") || message.content.startsWith(`<@${client.u
     }
 }
 
-if(message.content.startsWith(prefix+"search")) {
+if(mess.content.startsWith(prefix+"search")) {
     let index = 0
     if(!args) return message.channel.send(`**${prefix}search [song name]**`)
     const videos = await youtube.searchVideos(args, 10)
@@ -362,7 +362,7 @@ message.channel.send(`**Playing :notes: \`\`${videos[videoIndex - 1].title}\`\` 
     }
 
 
-else if (message.content.startsWith(prefix + 'vol') || message.startsWith(prefix+"صوت")) {
+else if (mess.content.startsWith(prefix + 'vol') || mess.startsWith(prefix+"صوت")) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if (!guilds[message.guild.id].isPlaying) return message.channel.send("**:x: Nothing playing in this server**")
     if(!args) return message.channel.send(`**:loud_sound: Current Volume:** ${guilds[message.guild.id].dispatcher.volume*100}`)
@@ -375,7 +375,7 @@ else if (message.content.startsWith(prefix + 'vol') || message.startsWith(prefix
 }
 
 
-else if (message.startsWith(prefix + 'pause') || message.startsWith(prefix+"وقف")) {
+else if (mess.startsWith(prefix + 'pause') || mess.startsWith(prefix+"وقف")) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if (guilds[message.guild.id].dispatcher.paused === true) return message.channel.send("*:hash: Already paused*")
     message.channel.send(':pause_button: **Paused**').then(() => {
@@ -383,7 +383,7 @@ else if (message.startsWith(prefix + 'pause') || message.startsWith(prefix+"وق
     });
 }
 
-else if (message.startsWith(prefix + 'resume') || message.startsWith(prefix+"كمل")) {
+else if (mess.startsWith(prefix + 'resume') || mess.startsWith(prefix+"كمل")) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if (guilds[message.guild.id].dispatcher.paused === false) return message.channel.send("*:hash: Nothing to resume.*")
     message.channel.send(':play_pause: **Resuming**').then(() => {
@@ -394,7 +394,7 @@ else if (message.startsWith(prefix + 'resume') || message.startsWith(prefix+"ك�
 
 // ONE ITEM WORKS, BUT QUEUE NO... ==> QUEUE LOOP SYSTEM IN 2.0
 
-else if (message.startsWith(prefix + 'loop') || message.startsWith(prefix+"عيد")) {
+else if (mess.startsWith(prefix + 'loop') || mess.startsWith(prefix+"عيد")) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if (!guilds[message.guild.id].isPlaying) return message.channel.send("**:x: Nothing playing in this server**")
     if(guilds[message.guild.id].loop === true) {
@@ -409,7 +409,7 @@ else if (message.startsWith(prefix + 'loop') || message.startsWith(prefix+"عي�
 }
 
 
-else if (message.startsWith(prefix + 'join') || message.startsWith(prefix+"ادخل")) {
+else if (mess.startsWith(prefix + 'join') || mess.startsWith(prefix+"ادخل")) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if(!guilds[message.guild.id].isPlaying && guilds[message.guild.id].queueNames.length <= 0) {
         message.member.voiceChannel.join().then(message.react(correct));
@@ -419,7 +419,7 @@ else if (message.startsWith(prefix + 'join') || message.startsWith(prefix+"اد�
     }
 }
 
-else if (message.startsWith(prefix + 'clear') || message.startsWith(prefix+"نظف")) {
+else if (mess.startsWith(prefix + 'clear') || mess.startsWith(prefix+"نظف")) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if(!guilds[message.guild.id].queueNames[0] || !guilds[message.guild.id].isPlaying) return message.channel.send(`**:x: Nothing playing in this server**`)
    if(guilds[message.guild.id].queueNames.length > 1) {
