@@ -1,31 +1,33 @@
 {
-  "name": "simple-music",
+  "name": "moha-",
   "version": "1.0.0",
-  "description": "Simple shitty music",
+  "description": "Discord Bot",
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Abady321x123/simple-music.git"
+    "url": "git+https://github.com/Tronax1/Aldebaran-.git"
   },
-  "author": "Abady",
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Abady321x123/simple-music/issues"
+    "url": "https://github.com/Tronax1/Aldebaran-/issues"
   },
-  "homepage": "https://github.com/Abady321x123/simple-music#readme",
+  "homepage": "https://github.com/Tronax1/Aldebaran-#readme",
   "dependencies": {
-    "discord.js": "^11.3.2",
-    "get-youtube-id": "^1.0.0",
+    "discord.js": "^11.1.0",
     "ffmpeg-binaries": "^3.2.2-3",
-    "hh-mm-ss": "^1.2.0",
-    "node-opus": "^0.3.0",
-    "request": "^2.85.0",
-    "short-number": "^1.0.6",
-    "simple-youtube-api": "^5.0.2",
-    "youtube-info": "^1.2.0",
-    "ytdl-core": "^0.20.4"
+    "fs": "0.0.1-security",
+    "get-youtube-id": "^1.0.0",
+    "node-osu": "^1.2.0",
+    "opusscript": "0.0.3",
+    "oxford-dictionary-api": "^1.0.1",
+    "request": "^2.81.0",
+    "superagent": "^3.5.2",
+    "youtube-info": "^1.1.1",
+    "youtube-playlist-info": "^0.1.0",
+    "ytdl-core": "^0.14.4"
   }
 }
