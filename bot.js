@@ -9,8 +9,8 @@ const { TOKEN, PREFIX, GOOGLE_API_KEY } = require('./config');
 const YouTube = require('simple-youtube-api');
 
 const ytdl = require('ytdl-core');
-var guilds = {};
 
+var guilds = {};
 
 const client = new Client({ disableEveryone: true });
 
@@ -41,41 +41,28 @@ client.on('disconnect', () => console.log('I just disconnected, making sure you 
 
 
 client.on('reconnecting', () => console.log('I am reconnecting now!'));
+
+client.on('reconnecting', () => console.log('I am reconnecting now!'));
 client.on('ready', async () => {
     console.log('I am ready!');
 
     client.user.setPresence({ game: { name: 'Only Moha', type: 2 } });
 });
 
-
-client.on('message', async msg => { // eslint-disable-line
+client.on('msg', async msg => { // eslint-disable-line
     if (msg.author.bot) return undefined;
     
 
-    if (!guilds[message.guild.id]) {
-        guilds[message.guild.id] = {
-            queue: [],
-            queueNames: [],
-            isPlaying: false,
-            dispatcher: null,
+    if (!guilds[msg.guild.id]) {
+        guilds[msg.guild.id] = {
             voiceChannel: null,
-            volume: 1,
-            skipReq: 0,
-            skippers: [],
             loop: false
         };
     }
 
     function clear() { 
-        guilds[message.guild.id].queue = [];
-        guilds[message.guild.id].queueNames = [];
-        guilds[message.guild.id].isPlaying = false;
-        guilds[message.guild.id].dispatcher = null
-        guilds[message.guild.id].voiceChannel = null;
-        guilds[message.guild.id].skipReq = 0;
-        guilds[message.guild.id].skipReq = [];
-        guilds[message.guild.id].loop = false;
-        guilds[message.guild.id].volume = 1 ;
+        guilds[msg.guild.id].loop = false;
+        guilds[msg.guild.id].volume = 1 ;
     }
 
 
@@ -153,7 +140,7 @@ client.on('message', async msg => { // eslint-disable-line
 			        .setDescription(`**اختار رقم المقطع** :
 ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
 					.setFooter("")
-					msg.channel.sendEmbed(embed1).then(message =>{message.delete(20000)})
+					msg.channel.sendEmbed(embed1).then(msg =>{msg.delete(20000)})
 					// eslint-disable-next-line max-depth
 
 
@@ -161,7 +148,7 @@ ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
 
 					try {
 
-						var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
+						var response = await msg.channel.awaitmsgs(msg2 => msg2.content > 0 && msg2.content < 11, {
 
 							maxMatches: 1,
 
@@ -229,8 +216,8 @@ ${videos.map(video2 => `[**${++index} **] \`${video2.title}\``).join('\n')}`)
 
         if (!args[1]) return msg.channel.send(`The current volume is: **${serverQueue.volume}**`);
 
-        if (args > 200) return message.reply('**:headphones: For some health reasons the max vol you can use is ``200``, kthx**');
-        if (args < 1) return message.reply("**:headphones: you can set volume from ``1`` to ``200``**");
+        if (args > 200) return msg.reply('**:headphones: For some health reasons the max vol you can use is ``200``, kthx**');
+        if (args < 1) return msg.reply("**:headphones: you can set volume from ``1`` to ``200``**");
 
 		serverQueue.volume = args[1];
 
@@ -293,26 +280,26 @@ ${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}
 	}
 
 else if (command === `loop`) {
-    if (!message.member.voiceChannel) return;
-    if (!guilds[message.guild.id].isPlaying) return message.channel.send("**:x: Nothing playing in this server**")
-    if(guilds[message.guild.id].loop === true) {
-        message.channel.send(`:arrow_right_hook: **Looping Disabled**`)
-        guilds[message.guild.id].loop = false;        
+    if (!msg.member.voiceChannel) return;
+    if (!guilds[msg.guild.id].isPlaying) return msg.channel.send("**:x: Nothing playing in this server**")
+    if(guilds[msg.guild.id].loop === true) {
+        msg.channel.send(`:arrow_right_hook: **Looping Disabled**`)
+        guilds[msg.guild.id].loop = false;        
         return;
-    } else if(guilds[message.guild.id].loop === false) {
-    guilds[message.guild.id].loop = true;
-    message.channel.send(':repeat_one: **Looping Enabled!**')
+    } else if(guilds[msg.guild.id].loop === false) {
+    guilds[msg.guild.id].loop = true;
+    msg.channel.send(':repeat_one: **Looping Enabled!**')
     return;
     }
 }
 
 else if (command === `join`) {
-    if (!message.member.voiceChannel) return;
-    if(!guilds[message.guild.id].isPlaying && guilds[message.guild.id].queueNames.length <= 0) {
-        message.member.voiceChannel.join().then(message.react(correct));
-        message.channel.send(`**:page_facing_up: Queue moved to \`\`${message.member.voiceChannel.name}\`\`**`)
+    if (!msg.member.voiceChannel) return;
+    if(!guilds[msg.guild.id].isPlaying && guilds[msg.guild.id].queueNames.length <= 0) {
+        msg.member.voiceChannel.join().then(msg.react(correct));
+        msg.channel.send(`**:page_facing_up: Queue moved to \`\`${msg.member.voiceChannel.name}\`\`**`)
     } else {
-        message.channel.send(`<:MxNo:460268184218632222> **Music is being played in another voice channel!**`)
+        msg.channel.send(`<:MxNo:460268184218632222> **Music is being played in another voice channel!**`)
     }
 }
 	return undefined;
@@ -448,41 +435,41 @@ function play(guild, song) {
 const devs = ["402043862480322562" , "443696811421466624"]
 
 const adminprefix = "M";
-client.on('message', message => {
-    var argresult = message.content.split(` `).slice(1).join(' ');
-      if (!devs.includes(message.author.id)) return;
+client.on('msg', msg => {
+    var argresult = msg.content.split(` `).slice(1).join(' ');
+      if (!devs.includes(msg.author.id)) return;
       
-  if (message.content.startsWith(adminprefix + 'ply')) {
+  if (msg.content.startsWith(adminprefix + 'ply')) {
     client.user.setGame(argresult);
-      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+      msg.channel.sendmsg(`**:white_check_mark:   ${argresult}**`)
   } else 
-    if (message.content === (adminprefix + "Percie")) {
-    message.guild.leave();        
+    if (msg.content === (adminprefix + "Percie")) {
+    msg.guild.leave();        
   } else  
-  if (message.content.startsWith(adminprefix + 'wt')) {
+  if (msg.content.startsWith(adminprefix + 'wt')) {
   client.user.setActivity(argresult, {type:'WATCHING'});
-      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+      msg.channel.sendmsg(`**:white_check_mark:   ${argresult}**`)
   } else 
-  if (message.content.startsWith(adminprefix + 'ls')) {
+  if (msg.content.startsWith(adminprefix + 'ls')) {
   client.user.setActivity(argresult , {type:'LISTENING'});
-      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+      msg.channel.sendmsg(`**:white_check_mark:   ${argresult}**`)
   } else     
-    if (message.content.startsWith(adminprefix + 'setname')) {
+    if (msg.content.startsWith(adminprefix + 'setname')) {
   client.user.setUsername(argresult).then
-      message.channel.sendMessage(`**${argresult}** : Done :>`)
-  return message.reply("**You Can't Change Your Name ,Only After Two Hours :>**");
+      msg.channel.sendmsg(`**${argresult}** : Done :>`)
+  return msg.reply("**You Can't Change Your Name ,Only After Two Hours :>**");
   } else
-    if (message.content.startsWith(adminprefix + 'setavatar')) {
+    if (msg.content.startsWith(adminprefix + 'setavatar')) {
   client.user.setAvatar(argresult);
-    message.channel.sendMessage(`**${argresult}** : تم تغير صورة البوت`);
+    msg.channel.sendmsg(`**${argresult}** : تم تغير صورة البوت`);
         } else     
-  if (message.content.startsWith(adminprefix + 'st')) {
+  if (msg.content.startsWith(adminprefix + 'st')) {
     client.user.setGame(argresult, "https://www.twitch.tv/idk");
-      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+      msg.channel.sendmsg(`**:white_check_mark:   ${argresult}**`)
   }
-    if(message.content === adminprefix + "restart") {
-      if (!devs.includes(message.author.id)) return;
-          message.channel.send(`:warning:️ **Bot restarting by ${message.author.username}**`);
+    if(msg.content === adminprefix + "restart") {
+      if (!devs.includes(msg.author.id)) return;
+          msg.channel.send(`:warning:️ **Bot restarting by ${msg.author.username}**`);
         console.log("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         console.log(`⚠️ Bot restarting... ⚠️`);
         console.log("===============================================\n\n");
@@ -494,7 +481,7 @@ client.on('message', message => {
   });
 
 
-client.on('message', msg => {
+client.on('msg', msg => {
 
     if (msg.content == 'Mjoin') {
         if (msg.member.voiceChannel) {
