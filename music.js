@@ -4,7 +4,7 @@ module.exports.run = async (client) => {
 
     const express = require("express");
     var app = express();
-    var errorlog = require("../errors.json")
+    var errorlog = require("./errors.json")
     const yt = require('ytdl-core');
     /*
     var RedisSessions = require("redis-sessions");
@@ -55,7 +55,7 @@ module.exports.run = async (client) => {
     var request = require('request')
 
 
-    var prefix = 'M';
+    const prefix = 'M';
 
 client.on("message", function(message) {
     var paused = {};
