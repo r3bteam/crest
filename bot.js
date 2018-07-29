@@ -41,6 +41,11 @@ client.on('disconnect', () => console.log('I just disconnected, making sure you 
 
 
 client.on('reconnecting', () => console.log('I am reconnecting now!'));
+client.on('ready', async () => {
+    console.log('I am ready!');
+
+    client.user.setPresence({ game: { name: 'Only Moha', type: 2 } });
+});
 
 
 client.on('message', async msg => { // eslint-disable-line
